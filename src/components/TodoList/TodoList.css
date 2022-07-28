@@ -1,0 +1,10 @@
+.todo-list {
+    height: 90%;
+}
+
+.todo-list > * {
+    margin: 0;
+    height: 50%;
+    overflow-y: scroll;
+    box-sizing: border-box;
+}

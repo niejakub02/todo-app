@@ -1,0 +1,15 @@
+.todo > * {
+    margin: 0;
+}
+
+.todo__title {
+    background-color: var(--primary100);
+}
+
+.todo__description {
+    background-color: var(--primary200);
+}
+
+.todo__done {
+    background-color: var(--primary300);
+}

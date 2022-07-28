@@ -1,0 +1,13 @@
+.todo-list__pending {
+    background-color: var(--primary400);
+    border: 5px solid var(--primary300);
+}
+
+.todo-list__done {
+    background-color: var(--primary400);
+    border: 5px solid var(--primary200);
+}
+
+.todo-list__elem--drag-over {
+    border: 5px dotted var(--primary500);
+}
