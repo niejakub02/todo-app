@@ -1,20 +1,18 @@
 import todoActions from "../components/Store/actions/todoActions";
 import themeActions from "../components/Store/actions/themeActions";
 import clear from "./clear";
-import Form from '../components/Form/Form';
-import Switch from '../components/Switch/Switch';
 import TodoList from "../components/TodoList/TodoList";
+import Header from "../components/Header/Header";
 
 const render = (todosStore, themesStore) => {
     clear();
 
-    Form((todo) => {
+    Header((todo) => {
         todosStore.dispatch(todoActions.addTodo(todo));
-    })()
-
-    Switch(() => {
+    },
+    () => {
         themesStore.dispatch(themeActions.toggleTheme())
-    })()
+    })();
 
     TodoList(todosStore.getState(),
     (todo) => {

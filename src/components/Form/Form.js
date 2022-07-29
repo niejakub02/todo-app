@@ -1,16 +1,10 @@
 import './Form.css';
 import addEvent from "../../helpers/addEvent";
 import mount from "../../helpers/mount";
+import submitHandler from '../../handlers/submitHandler';
 
 const Form = (submitCB) => {
     let form, button, title_input, description_input;
-
-    const submitHandler = (event) => {
-        event.preventDefault();
-        if (!!title_input.value.length && !!description_input.value.length) {
-            submitCB({ title: title_input.value, description: description_input.value });
-        }
-    }
 
     const build = () => {
         form = document.createElement('form');
@@ -28,14 +22,15 @@ const Form = (submitCB) => {
         
         button = document.createElement('button');
         button.classList.add('form__submit');
-        button.innerHTML = 'add todo';
+        button.classList.add('material-symbols-outlined');
+        button.innerHTML = 'add';
         mount(button, form)
     }   
     
     const render = () => {
         build();
-        addEvent(button, 'click', submitHandler);
-        addEvent(form, 'submit', submitHandler);
+        addEvent(button, 'click', () => submitHandler(event, title_input.value, description_input.value, submitCB));
+        addEvent(form, 'submit', () => submitHandler(event, title_input.value, description_input.value, submitCB));
         return form;
     }
     

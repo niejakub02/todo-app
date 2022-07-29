@@ -1,3 +1,16 @@
 .switch {
-    height: 5%;
+    
+}
+
+.switch__button {
+    border-radius: 50%;
+    height: 4rem;
+    width: 4rem;
+    outline: 0;
+    background-color: var(--primary200);
+    border: 0;
+    box-shadow: 12px 12px 24px var(--shadow200), -12px -12px 24px var(--shadow100);
+    font-size: 2rem;
+    color: var(--primary100);
+    cursor: pointer;
 }

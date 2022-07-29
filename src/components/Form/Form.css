@@ -1,3 +1,28 @@
 .form {
-    height: 5%;
+    display: flex;
+    gap: 2rem;
+}
+
+.form__title, .form__description {
+    padding: 1rem;
+    border-radius: 2rem;
+    outline: 0;
+    width: 20rem;
+    color: var(--primary300);
+}
+
+.form__submit {
+    border-radius: 50%;
+    height: 4rem;
+    width: 4rem;
+    font-size: 2.5rem;
+    color: var(--primary100);
+    cursor: pointer;
+}
+
+.form__title, .form__description, .form__submit {
+    outline: 0;
+    background-color: var(--primary200);
+    border: 0;
+    box-shadow: 12px 12px 24px var(--shadow200), -12px -12px 24px var(--shadow100);
 }

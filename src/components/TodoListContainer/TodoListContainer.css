@@ -1,13 +1,26 @@
 .todo-list__pending {
-    background-color: var(--primary400);
-    border: 5px solid var(--primary300);
+    /* background-color: var(--primary400);
+    border: 5px solid var(--primary300); */
+
 }
 
 .todo-list__done {
-    background-color: var(--primary400);
-    border: 5px solid var(--primary200);
+    /* background-color: var(--primary400);
+    border: 5px solid var(--primary200); */
 }
 
-.todo-list__elem--drag-over {
-    border: 5px dotted var(--primary500);
+.todo-list__pending, .todo-list__done {
+    /* background-color: var(--primary400);
+    border: 5px solid var(--primary200); */
+    transition: border-color .5s ease-out;
+}
+
+.todo-list__done.todo-list__elem--drag-over, .todo-list__pending.todo-list__elem--drag-over {
+    border: 2px dashed var(--primary100);
+    /* box-shadow: inset 6px 6px 48px var(--shadow200), inset -6px -6px 12px var(--shadow100); */
+}
+
+.todo-list__label {
+    display: flex;
+    justify-content: center;
 }
