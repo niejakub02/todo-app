@@ -1,9 +1,12 @@
-import { dark, light } from "../../../themes/themes";
+import initialState from "../initialState";
 
-const themes = (state = '', action) => {
+const themes = (state = {...initialState}, action) => {
     switch (action.type) {
         case 'TOGGLE_THEME':
-            return (state === dark) ? light : dark;
+            return {
+                todos: [...state.todos],
+                themes: !state.themes
+            }
 
         default:
             return state;

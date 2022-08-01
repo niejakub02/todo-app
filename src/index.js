@@ -1,19 +1,17 @@
 import './styles/style.css';
 import createStore from './components/store/Store';
-import todos from './components/store/reducers/todosReducer';
-import themes from './components/store/reducers/themesReducer';
 import render from './helpers/render';
 import applyTheme from './helpers/applyTheme';
+import todos from './components/Store/reducers/todosReducer';
+import themes from './components/Store/reducers/themesReducer';
+import combineReducers from './components/Store/reducers/combineReducers';
 
-const todosStore = createStore(todos);
-const themesStore = createStore(themes);
+const rootReducer = combineReducers(todos, themes)
+const store = createStore(rootReducer);
 
-todosStore.subscribe(() => {
-    render(todosStore, themesStore);
+store.subscribe(() => {
+    applyTheme(store);
+    render(store);
 });
 
-themesStore.subscribe(() => {
-    applyTheme(themesStore);
-});
-
-render(todosStore, themesStore);
+render(store);

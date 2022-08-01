@@ -1,9 +1,11 @@
-const createStore = (counter) => {
-    let state = [];
+import initialState from "./../Store/initialState";
+
+const createStore = (reducer) => {
+    let state = {...initialState};
     let listeners = [];
 
     const dispatch = (action) => {
-        state = counter(state, action);
+        state = reducer(state, action);
         listeners.forEach(listener => {
             listener(action);
         });

@@ -2,8 +2,6 @@ import './TodoList.css';
 import TodoListContainer from "../TodoListContainer/TodoListContainer";
 import Todo from "../Todo/Todo";
 import mount from "../../helpers/mount";
-import addEvent from '../../helpers/addEvent';
-import copyKeyHandler from '../../handlers/copyKeyHandler';
 
 const TodoList = (todos, setCB, copyCB, deleteCB) => {
     let container, pendingContainer, doneContainer;
@@ -23,8 +21,6 @@ const TodoList = (todos, setCB, copyCB, deleteCB) => {
 
     const render = () => {
         build();
-        addEvent(document, 'keydown', () => copyKeyHandler(event, true));
-        addEvent(document, 'keyup', () => copyKeyHandler(event, false));
         return container;
     }
 

@@ -4,25 +4,25 @@ import clear from "./clear";
 import TodoList from "../components/TodoList/TodoList";
 import Header from "../components/Header/Header";
 
-const render = (todosStore, themesStore) => {
+const render = (store) => {
     clear();
 
     Header((todo) => {
-        todosStore.dispatch(todoActions.addTodo(todo));
+        store.dispatch(todoActions.addTodo(todo));
     },
     () => {
-        themesStore.dispatch(themeActions.toggleTheme())
+        store.dispatch(themeActions.toggleTheme())
     })();
 
-    TodoList(todosStore.getState(),
+    TodoList(store.getState().todos,
     (todo) => {
-        todosStore.dispatch(todoActions.setTodoState(todo));
+        store.dispatch(todoActions.setTodoState(todo));
     },
     (todo) => {
-        todosStore.dispatch(todoActions.copyTodo(todo));
+        store.dispatch(todoActions.copyTodo(todo));
     },
     (id) => {
-        todosStore.dispatch(todoActions.deleteTodo(id));
+        store.dispatch(todoActions.deleteTodo(id));
     }
     )()
 }

@@ -1,6 +1,6 @@
 const themeActions = {
     toggleTheme: () => ({
-        type: 'TOGGLE_THEME'
+        type: 'themes/TOGGLE_THEME'
     }),
 }
 

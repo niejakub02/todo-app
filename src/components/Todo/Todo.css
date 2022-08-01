@@ -8,20 +8,8 @@
     gap: 2rem;
 }
 
-.todo__title {
-    
-}
-
-.todo__description {
-    
-}
-
 .todo__title, .todo__description {
     word-wrap: break-word;
-}
-
-.todo__done {
-    
 }
 
 .todo__dot {
