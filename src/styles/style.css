@@ -1,0 +1,42 @@
+:root {
+    --primary100: #004B8E;
+    --primary200: #ECF0F3;
+    --primary300: #000000;
+    --shadow100: rgba(255, 255, 255, 0.6);
+    --shadow200: rgba(0, 0, 0, .1);
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    margin: 0;
+}
+
+#root {
+    color: var(--primary100);
+    background-color: var(--primary200);
+    display: grid;
+    min-height: 100vh;
+    grid-template: auto 1fr/ 1fr;
+    gap: 1rem;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+  
+* {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+    font-family: 'Nunito Sans', sans-serif;
+    margin: 0;
+}
+
+
+@media screen and (max-width: 1000px) {
+    html {
+        font-size: 12px;
+    }
+}

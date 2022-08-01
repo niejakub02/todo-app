@@ -1,0 +1,12 @@
+.todo-list__pending, .todo-list__done {
+    transition: border-color .5s ease-out;
+}
+
+.todo-list__done.todo-list__elem--drag-over, .todo-list__pending.todo-list__elem--drag-over {
+    border: 2px dashed var(--primary100);
+}
+
+.todo-list__label {
+    display: flex;
+    justify-content: center;
+}
