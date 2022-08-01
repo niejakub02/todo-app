@@ -5,7 +5,7 @@ import mount from "../../helpers/mount";
 import addEvent from '../../helpers/addEvent';
 import copyKeyHandler from '../../handlers/copyKeyHandler';
 
-const TodoList = (todos, setCB, copyCB, toggleCB, deleteCB) => {
+const TodoList = (todos, setCB, copyCB, deleteCB) => {
     let container, pendingContainer, doneContainer;
 
     const build = () => {
@@ -17,7 +17,7 @@ const TodoList = (todos, setCB, copyCB, toggleCB, deleteCB) => {
         doneContainer = TodoListContainer('todo-list__done', 'Done', setCB, copyCB, true)(container);
 
         for (let todo of todos) {
-            Todo(todo, toggleCB, deleteCB)((todo.done) ? doneContainer : pendingContainer);
+            Todo(todo, deleteCB)((todo.done) ? doneContainer : pendingContainer);
         }
     }
 

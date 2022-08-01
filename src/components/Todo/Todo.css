@@ -54,4 +54,18 @@
     background-color: var(--primary200);
     border: 0;
     color: var(--primary100);
+    font-style: italic;
+    word-break: normal;
+    cursor: pointer;
+}
+
+.todo__delete:hover {
+    text-decoration: underline;
+}
+
+.todo__label-wrapper {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    word-break: break-word;
 }

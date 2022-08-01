@@ -19,7 +19,7 @@ const Switch = (toggleThemeCB) => {
 
     const render = () => {
         build();
-        addEvent(button, 'click', () => switchHandler(toggleThemeCB))
+        addEvent(button, 'click', () => switchHandler(toggleThemeCB, button))
         return container;
     }
 

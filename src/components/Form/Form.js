@@ -4,7 +4,7 @@ import mount from "../../helpers/mount";
 import submitHandler from '../../handlers/submitHandler';
 
 const Form = (submitCB) => {
-    let form, button, title_input, description_input;
+    let form, button, button_mobile, title_input, description_input;
 
     const build = () => {
         form = document.createElement('form');
@@ -24,7 +24,12 @@ const Form = (submitCB) => {
         button.classList.add('form__submit');
         button.classList.add('material-symbols-outlined');
         button.innerHTML = 'add';
-        mount(button, form)
+        mount(button, form);
+
+        button_mobile = document.createElement('button');
+        button_mobile.classList.add('form__submit-mobile');
+        button_mobile.innerHTML = 'Add node';
+        mount(button_mobile, form);
     }   
     
     const render = () => {

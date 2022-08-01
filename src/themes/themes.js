@@ -11,5 +11,5 @@ export const dark = {
     '--primary200': '#292D32',
     '--primary300': '#FFFFFF',
     '--shadow100': 'rgba(255, 166, 133, 0.04)',
-    '--shadow200': 'rgba(0, 0, 0, .15)'
+    '--shadow200': 'rgba(0, 0, 0, .3)'
 }

@@ -17,3 +17,9 @@
     gap: 2rem;
     padding: 1rem;
 }
+
+@media screen and (max-width: 1000px) {
+    .todo-list {
+        grid-template: auto auto/ 1fr;
+    }
+}

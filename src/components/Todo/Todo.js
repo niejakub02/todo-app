@@ -1,12 +1,11 @@
 import './Todo.css';
 import addEvent from "../../helpers/addEvent";
 import mount from "../../helpers/mount";
-import todoToggleHandler from '../../handlers/todoToggleHandler';
 import todoDeleteHandler from '../../handlers/deleteTodoHandler';
 import dragStartHandler from '../../handlers/dragStartHandler';
 
-const Todo = (todo, toggleCB, deleteCB) => {
-    let container, done, remover, inner_dot;
+const Todo = (todo, deleteCB) => {
+    let container, remover, inner_dot;
 
     const build = () => {
         container = document.createElement('div')
@@ -25,30 +24,28 @@ const Todo = (todo, toggleCB, deleteCB) => {
         content.classList.add('todo__content-wrapper');
         mount(content, container);
 
+        let label_wrapper = document.createElement('div');
+        label_wrapper.classList.add('todo__label-wrapper');
+        mount(label_wrapper, content);
+
         let title = document.createElement('h2');
         title.classList.add('todo__title');
         title.innerHTML = todo.title;
-        mount(title, content);
+        mount(title, label_wrapper);
+
+        remover = document.createElement('button');
+        remover.classList.add('todo__delete');
+        remover.innerHTML = 'delete';
+        mount(remover, label_wrapper);
 
         let description = document.createElement('p');
         description.classList.add('todo__description');
         description.innerHTML = todo.description;
         mount(description, content);
-
-        // done = document.createElement('p');
-        // done.classList.add('todo__done');
-        // done.innerHTML = todo.done;
-        // mount(done, container);
-
-        remover = document.createElement('button');
-        remover.classList.add('todo__delete');
-        remover.innerHTML = 'delete';
-        mount(remover, container);
     }
     
     const render = () => {
         build();
-        // addEvent(done, 'click', () => todoToggleHandler(toggleCB, todo.id));
         addEvent(remover, 'click', () => todoDeleteHandler(deleteCB, todo.id));
         addEvent(inner_dot, 'dragstart', () => dragStartHandler(event, todo.id));
         return container;

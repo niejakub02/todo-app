@@ -22,9 +22,6 @@ const render = (todosStore, themesStore) => {
         todosStore.dispatch(todoActions.copyTodo(todo));
     },
     (id) => {
-        todosStore.dispatch(todoActions.toggleTodo(id));
-    },
-    (id) => {
         todosStore.dispatch(todoActions.deleteTodo(id));
     }
     )()
