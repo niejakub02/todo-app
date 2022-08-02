@@ -310,63 +310,6 @@ var themes = function themes() {
 
 /***/ }),
 
-/***/ "./src/components/Store/reducers/todoReducer.js":
-/*!******************************************************!*\
-  !*** ./src/components/Store/reducers/todoReducer.js ***!
-  \******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var id = 0;
-
-var todo = function todo(state, action) {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return {
-        id: id++,
-        title: action.title,
-        description: action.description,
-        done: false
-      };
-
-    case 'TOGGLE_TODO':
-      if (state.id !== action.id) return state;
-      return _objectSpread(_objectSpread({}, state), {}, {
-        done: !state.done
-      });
-
-    case 'DELETE_TODO':
-      if (state.id !== action.id) return state;
-
-    case 'SET_TODO_STATE':
-      if (state.id !== action.id) return state;
-      return _objectSpread(_objectSpread({}, state), {}, {
-        done: action.done
-      });
-
-    case 'COPY_TODO':
-      state.find(function (t) {
-        return t.id === action.id;
-      });
-
-    default:
-      return state;
-  }
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (todo);
-
-/***/ }),
-
 /***/ "./src/components/Store/reducers/todosReducer.js":
 /*!*******************************************************!*\
   !*** ./src/components/Store/reducers/todosReducer.js ***!
@@ -378,7 +321,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _initialState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../initialState */ "./src/components/Store/initialState.js");
-/* harmony import */ var _todoReducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todoReducer */ "./src/components/Store/reducers/todoReducer.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -398,7 +340,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-
+var id = 0;
 
 var todos = function todos() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _objectSpread({}, _initialState__WEBPACK_IMPORTED_MODULE_0__["default"]);
@@ -407,37 +349,53 @@ var todos = function todos() {
   switch (action.type) {
     case 'ADD_TODO':
       return {
-        todos: [].concat(_toConsumableArray(state.todos), [(0,_todoReducer__WEBPACK_IMPORTED_MODULE_1__["default"])({}, action)]),
+        todos: [].concat(_toConsumableArray(state.todos), [{
+          id: id++,
+          title: action.title,
+          description: action.description,
+          done: false
+        }]),
         themes: state.themes
       };
 
     case 'TOGGLE_TODO':
       return {
-        todos: state.todos.map(function (t) {
-          return (0,_todoReducer__WEBPACK_IMPORTED_MODULE_1__["default"])(t, action);
+        todos: state.todos.map(function (todo) {
+          if (todo.id !== action.id) return todo;
+          return _objectSpread(_objectSpread({}, todo), {}, {
+            done: !todo.done
+          });
         }),
         themes: state.themes
       };
 
     case 'DELETE_TODO':
       return {
-        todos: state.todos.filter(function (t) {
-          (0,_todoReducer__WEBPACK_IMPORTED_MODULE_1__["default"])(t, action);
+        todos: state.todos.filter(function (todo) {
+          if (todo.id !== action.id) return todo;
         }),
         themes: state.themes
       };
 
     case 'SET_TODO_STATE':
       return {
-        todos: state.todos.map(function (t) {
-          return (0,_todoReducer__WEBPACK_IMPORTED_MODULE_1__["default"])(t, action);
+        todos: state.todos.map(function (todo) {
+          if (todo.id !== action.id) return todo;
+          return _objectSpread(_objectSpread({}, todo), {}, {
+            done: action.done
+          });
         }),
         themes: state.themes
       };
 
     case 'COPY_TODO':
       return {
-        todos: [].concat(_toConsumableArray(state.todos), _toConsumableArray((0,_todoReducer__WEBPACK_IMPORTED_MODULE_1__["default"])(state.todos, action))),
+        todos: [].concat(_toConsumableArray(state.todos), [_objectSpread(_objectSpread({}, state.todos.find(function (todo) {
+          return todo.id === action.id;
+        })), {}, {
+          id: id++,
+          done: action.done
+        })]),
         themes: state.themes
       };
 
@@ -2184,4 +2142,4 @@ store.subscribe(function () {
 
 /******/ })()
 ;
-//# sourceMappingURL=bundle.51c31fa4ecda65933d33.js.map
+//# sourceMappingURL=bundle.9b7529845a57e457eafd.js.map
