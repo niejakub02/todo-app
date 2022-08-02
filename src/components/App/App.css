@@ -1,0 +1,8 @@
+.root {
+    color: var(--primary100);
+    background-color: var(--primary200);
+    display: grid;
+    min-height: 100vh;
+    grid-template: auto 1fr/ 1fr;
+    gap: 1rem;
+}
