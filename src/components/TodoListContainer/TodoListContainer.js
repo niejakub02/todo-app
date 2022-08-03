@@ -13,13 +13,16 @@ class TodoListContainer extends Base {
     }
 
     build(consts) {
+        this.border = this.createElement('div', 'todo-list__border');
+        this.mount(this.border)
+
         this.label = this.createElement('h1', 'todo-list__label', consts.label);
         this.mount(this.label);
     }
 
     addEvents(consts) {
-        this.addEvent(this.container, 'dragenter', (event) => this.enterTarget = dragEnterHandler(event, this.container));
-        this.addEvent(this.container, 'dragleave', (event) => dragLeaveHandler(event, this.enterTarget, this.container));
+        this.addEvent(this.container, 'dragenter', (event) => this.enterTarget = dragEnterHandler(event, this.border));
+        this.addEvent(this.container, 'dragleave', (event) => dragLeaveHandler(event, this.enterTarget, this.border));
         this.addEvent(this.container, 'dragover', (event) => dragOverHandler(event));
         this.addEvent(this.container, 'drop', (event) => dropHandler(event, this.store, consts.done, this.container));
     }

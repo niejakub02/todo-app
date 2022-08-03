@@ -9,10 +9,11 @@ class Todo extends Base {
     }
 
     build(todo) {
-        this.dot = this.createElement('div', 'todo__dot');
+        this.dot = this.createElement('div', 'todo__dot shadow-inner');
+
         this.mount(this.dot);
 
-        this.inner_dot = this.createElement('div', 'dot__inner');
+        this.inner_dot = this.createElement('div', 'dot__inner shadow-outer');
         this.inner_dot.draggable = true;
         this.mount(this.inner_dot, this.dot);
 

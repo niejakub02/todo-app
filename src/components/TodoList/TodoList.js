@@ -8,11 +8,11 @@ class TodoList extends Base {
     }
 
     build() {
-        this.pendingContainer = new TodoListContainer('div', 'todo-list__pending');
+        this.pendingContainer = new TodoListContainer('div', 'todo-list__pending shadow-outer');
         this.pendingContainer.render({ label: 'Pending', done: false });
         this.mount(this.pendingContainer.container);
 
-        this.doneContainer = new TodoListContainer('div', 'todo-list__done');
+        this.doneContainer = new TodoListContainer('div', 'todo-list__done shadow-outer');
         this.doneContainer.render({ label: 'Done', done: true });
         this.mount(this.doneContainer.container);
     }
