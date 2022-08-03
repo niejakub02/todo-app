@@ -19,14 +19,13 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    box-shadow: inset 6px 6px 12px var(--shadow200), inset -6px -6px 12px var(--shadow100);
 }
 
 .dot__inner {
     min-height: 3rem;
     min-width: 3rem;
     border-radius: 50%;
-    box-shadow: 6px 6px 12px var(--shadow200), -6px -6px 12px var(--shadow100);
+    background: linear-gradient(135deg, var(--dot-gradient100) 0%, var(--dot-gradient200) 100%);
     cursor: move;
 }
 

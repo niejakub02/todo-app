@@ -5,8 +5,12 @@
     outline: 0;
     background-color: var(--primary200);
     border: 0;
-    box-shadow: 12px 12px 24px var(--shadow200), -12px -12px 24px var(--shadow100);
     font-size: 2rem;
     color: var(--primary100);
     cursor: pointer;
+    user-select: none;
+}
+
+.switch__button:active {
+    box-shadow: 1px 1px 2px var(--shadow400), -1px -1px 2px var(--shadow500), inset -5px 5px 10px var(--shadow100), inset 5px -5px 10px var(--shadow100), inset -5px -5px 10px var(--shadow200), inset 5px 5px 13px var(--shadow300);
 }

@@ -15,6 +15,7 @@ const TodoList = (todos, setCB, copyCB, deleteCB) => {
         doneContainer = TodoListContainer('todo-list__done', 'Done', setCB, copyCB, true)(container);
 
         for (let todo of todos) {
+            console.log(todos);
             Todo(todo, deleteCB)((todo.done) ? doneContainer : pendingContainer);
         }
     }

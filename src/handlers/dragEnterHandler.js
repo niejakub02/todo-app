@@ -1,5 +1,5 @@
-const dragEnterHandler = (event, container) => {
-    container.classList.add('todo-list__elem--drag-over');
+const dragEnterHandler = (event, border) => {
+    border.classList.add('todo-list__border--drag-over');
     return event.target;
 }
 

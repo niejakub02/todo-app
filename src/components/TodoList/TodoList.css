@@ -6,11 +6,9 @@
 }
 
 .todo-list > * {
+    position: relative;
     margin: 0;
     overflow-y: scroll;
-    /* box-sizing: border-box; */
-    border: 2px dashed transparent;
-    box-shadow: 12px 12px 24px var(--shadow200), -12px -12px 24px var(--shadow100);
     border-radius: 2rem;
     display: flex;
     flex-direction: column;

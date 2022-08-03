@@ -13,10 +13,12 @@ const Todo = (todo, deleteCB) => {
 
         let dot = document.createElement('div');
         dot.classList.add('todo__dot');
+        dot.classList.add('shadow-inner');
         mount(dot, container);
 
         inner_dot = document.createElement('div');
         inner_dot.classList.add('dot__inner');
+        inner_dot.classList.add('shadow-outer');
         inner_dot.draggable = true;
         mount(inner_dot, dot);
 

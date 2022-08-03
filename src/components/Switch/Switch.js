@@ -13,6 +13,7 @@ const Switch = (toggleThemeCB) => {
         button = document.createElement('button');
         button.classList.add('switch__button');
         button.classList.add('material-symbols-outlined');
+        button.classList.add('shadow-outer');
         button.innerHTML = 'light_mode';
         mount(button, container);
     }
