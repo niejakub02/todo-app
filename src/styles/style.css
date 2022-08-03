@@ -1,0 +1,55 @@
+:root {
+    --primary100: #004B8E;
+    --primary200: #ECF0F3;
+    --primary300: #000000;
+    --shadow100: rgba(212, 216, 219, 0.2);
+    --shadow200: rgba(255, 255, 255, 0.9);
+    --shadow300: rgba(212, 216, 219, 0.9);
+    --shadow400: rgba(255, 255, 255, 0.3);
+    --shadow500: rgba(212, 216, 219, 0.5);
+    --dot-gradient100: #E0E4E7;
+    --dot-gradient200: #F8FCFF;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    margin: 0;
+}
+
+#root {
+    color: var(--primary100);
+    background-color: var(--primary200);
+    display: grid;
+    min-height: 100vh;
+    grid-template: auto 1fr/ 1fr;
+    gap: 1rem;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+  
+* {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+    font-family: 'Nunito Sans', sans-serif;
+    margin: 0;
+}
+
+
+@media screen and (max-width: 1000px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+.shadow-outer {
+    box-shadow: -5px 5px 10px var(--shadow100), 5px -5px 10px var(--shadow100), -5px -5px 10px var(--shadow200), 5px 5px 13px var(--shadow300), inset 1px 1px 2px var(--shadow400), inset -1px -1px 2px var(--shadow500);
+}
+
+.shadow-inner {
+    box-shadow: 1px 1px 2px var(--shadow400), -1px -1px 2px var(--shadow500), inset -5px 5px 10px var(--shadow100), inset 5px -5px 10px var(--shadow100), inset -5px -5px 10px var(--shadow200), inset 5px 5px 13px var(--shadow300);
+}
