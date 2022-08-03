@@ -1,0 +1,58 @@
+.todo > * {
+    margin: 0;
+}
+
+.todo {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.todo__title, .todo__description {
+    word-wrap: break-word;
+}
+
+.todo__dot {
+    min-height: 5rem;
+    min-width: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.dot__inner {
+    min-height: 3rem;
+    min-width: 3rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--dot-gradient100) 0%, var(--dot-gradient200) 100%);
+    cursor: move;
+}
+
+.todo__content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    max-width: 60%;
+}
+
+.todo__delete {
+    outline: 0;
+    background-color: var(--primary200);
+    border: 0;
+    color: var(--primary100);
+    font-style: italic;
+    word-break: normal;
+    cursor: pointer;
+}
+
+.todo__delete:hover {
+    text-decoration: underline;
+}
+
+.todo__label-wrapper {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    word-break: break-word;
+}

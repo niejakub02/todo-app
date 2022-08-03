@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 2rem;
+}
+
+.header__logo {
+    user-select: none;
+}
+
+@media screen and (max-width: 720px) {
+    .header {
+        flex-flow: row wrap;
+        gap: 1rem;
+    }
+}
