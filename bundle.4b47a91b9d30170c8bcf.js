@@ -29,19 +29,23 @@ var Form = function Form(submitCB) {
     form.classList.add('form');
     title_input = document.createElement('input');
     title_input.classList.add('form__title');
+    title_input.classList.add('shadow-outer');
     title_input.placeholder = 'title';
     (0,_helpers_mount__WEBPACK_IMPORTED_MODULE_2__["default"])(title_input, form);
     description_input = document.createElement('input');
     description_input.classList.add('form__description');
+    description_input.classList.add('shadow-outer');
     description_input.placeholder = 'description';
     (0,_helpers_mount__WEBPACK_IMPORTED_MODULE_2__["default"])(description_input, form);
     button = document.createElement('button');
     button.classList.add('form__submit');
     button.classList.add('material-symbols-outlined');
+    button.classList.add('shadow-outer');
     button.innerHTML = 'add';
     (0,_helpers_mount__WEBPACK_IMPORTED_MODULE_2__["default"])(button, form);
     button_mobile = document.createElement('button');
     button_mobile.classList.add('form__submit-mobile');
+    button_mobile.classList.add('shadow-outer');
     button_mobile.innerHTML = 'Add node';
     (0,_helpers_mount__WEBPACK_IMPORTED_MODULE_2__["default"])(button_mobile, form);
   };
@@ -310,6 +314,66 @@ var themes = function themes() {
 
 /***/ }),
 
+/***/ "./src/components/Store/reducers/todoReducer.js":
+/*!******************************************************!*\
+  !*** ./src/components/Store/reducers/todoReducer.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var id = 0;
+
+var todo = function todo(state, action) {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return {
+        id: id++,
+        title: action.title,
+        description: action.description,
+        done: false
+      };
+
+    case 'TOGGLE_TODO':
+      if (state.id !== action.id) return state;
+      return _objectSpread(_objectSpread({}, state), {}, {
+        done: !state.done
+      });
+
+    case 'DELETE_TODO':
+      if (state.id !== action.id) return state;
+
+    case 'SET_TODO_STATE':
+      if (state.id !== action.id) return state;
+      return _objectSpread(_objectSpread({}, state), {}, {
+        done: action.done
+      });
+
+    case 'COPY_TODO':
+      return _objectSpread(_objectSpread({}, state.find(function (t) {
+        return t.id === action.id;
+      })), {}, {
+        id: id++,
+        done: action.done
+      });
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (todo);
+
+/***/ }),
+
 /***/ "./src/components/Store/reducers/todosReducer.js":
 /*!*******************************************************!*\
   !*** ./src/components/Store/reducers/todosReducer.js ***!
@@ -321,6 +385,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _initialState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../initialState */ "./src/components/Store/initialState.js");
+/* harmony import */ var _todoReducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todoReducer */ "./src/components/Store/reducers/todoReducer.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -340,7 +405,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-var id = 0;
+
 
 var todos = function todos() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _objectSpread({}, _initialState__WEBPACK_IMPORTED_MODULE_0__["default"]);
@@ -349,53 +414,37 @@ var todos = function todos() {
   switch (action.type) {
     case 'ADD_TODO':
       return {
-        todos: [].concat(_toConsumableArray(state.todos), [{
-          id: id++,
-          title: action.title,
-          description: action.description,
-          done: false
-        }]),
+        todos: [].concat(_toConsumableArray(state.todos), [(0,_todoReducer__WEBPACK_IMPORTED_MODULE_1__["default"])({}, action)]),
         themes: state.themes
       };
 
     case 'TOGGLE_TODO':
       return {
-        todos: state.todos.map(function (todo) {
-          if (todo.id !== action.id) return todo;
-          return _objectSpread(_objectSpread({}, todo), {}, {
-            done: !todo.done
-          });
+        todos: state.todos.map(function (t) {
+          return (0,_todoReducer__WEBPACK_IMPORTED_MODULE_1__["default"])(t, action);
         }),
         themes: state.themes
       };
 
     case 'DELETE_TODO':
       return {
-        todos: state.todos.filter(function (todo) {
-          if (todo.id !== action.id) return todo;
+        todos: state.todos.filter(function (t) {
+          return t.id !== action.id;
         }),
         themes: state.themes
       };
 
     case 'SET_TODO_STATE':
       return {
-        todos: state.todos.map(function (todo) {
-          if (todo.id !== action.id) return todo;
-          return _objectSpread(_objectSpread({}, todo), {}, {
-            done: action.done
-          });
+        todos: state.todos.map(function (t) {
+          return (0,_todoReducer__WEBPACK_IMPORTED_MODULE_1__["default"])(t, action);
         }),
         themes: state.themes
       };
 
     case 'COPY_TODO':
       return {
-        todos: [].concat(_toConsumableArray(state.todos), [_objectSpread(_objectSpread({}, state.todos.find(function (todo) {
-          return todo.id === action.id;
-        })), {}, {
-          id: id++,
-          done: action.done
-        })]),
+        todos: [].concat(_toConsumableArray(state.todos), [(0,_todoReducer__WEBPACK_IMPORTED_MODULE_1__["default"])(state.todos, action)]),
         themes: state.themes
       };
 
@@ -436,6 +485,7 @@ var Switch = function Switch(toggleThemeCB) {
     button = document.createElement('button');
     button.classList.add('switch__button');
     button.classList.add('material-symbols-outlined');
+    button.classList.add('shadow-outer');
     button.innerHTML = 'light_mode';
     (0,_helpers_mount__WEBPACK_IMPORTED_MODULE_2__["default"])(button, container);
   };
@@ -484,11 +534,15 @@ __webpack_require__.r(__webpack_exports__);
 
 var TodoListContainer = function TodoListContainer(classname, label_content, setCB, copyCB, done) {
   var enterTarget = null;
-  var container;
+  var container, border;
 
   var build = function build() {
     container = document.createElement('div');
     container.classList.add(classname);
+    container.classList.add('shadow-outer');
+    border = document.createElement('div');
+    border.classList.add('todo-list__border');
+    (0,_helpers_mount__WEBPACK_IMPORTED_MODULE_2__["default"])(border, container);
     var label = document.createElement('h1');
     label.classList.add('todo-list__label');
     label.innerHTML = label_content;
@@ -498,10 +552,10 @@ var TodoListContainer = function TodoListContainer(classname, label_content, set
   var render = function render() {
     build();
     (0,_helpers_addEvent__WEBPACK_IMPORTED_MODULE_1__["default"])(container, 'dragenter', function () {
-      return enterTarget = (0,_handlers_dragEnterHandler__WEBPACK_IMPORTED_MODULE_3__["default"])(event, container);
+      return enterTarget = (0,_handlers_dragEnterHandler__WEBPACK_IMPORTED_MODULE_3__["default"])(event, border);
     });
     (0,_helpers_addEvent__WEBPACK_IMPORTED_MODULE_1__["default"])(container, 'dragleave', function () {
-      return (0,_handlers_dragLeaveHandler__WEBPACK_IMPORTED_MODULE_4__["default"])(event, enterTarget, container);
+      return (0,_handlers_dragLeaveHandler__WEBPACK_IMPORTED_MODULE_4__["default"])(event, enterTarget, border);
     });
     (0,_helpers_addEvent__WEBPACK_IMPORTED_MODULE_1__["default"])(container, 'dragover', function () {
       return (0,_handlers_dragOverHandler__WEBPACK_IMPORTED_MODULE_5__["default"])(event);
@@ -561,6 +615,7 @@ var TodoList = function TodoList(todos, setCB, copyCB, deleteCB) {
     try {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var todo = _step.value;
+        console.log(todos);
         (0,_Todo_Todo__WEBPACK_IMPORTED_MODULE_2__["default"])(todo, deleteCB)(todo.done ? doneContainer : pendingContainer);
       }
     } catch (err) {
@@ -613,9 +668,11 @@ var Todo = function Todo(todo, deleteCB) {
     container.classList.add('todo');
     var dot = document.createElement('div');
     dot.classList.add('todo__dot');
+    dot.classList.add('shadow-inner');
     (0,_helpers_mount__WEBPACK_IMPORTED_MODULE_2__["default"])(dot, container);
     inner_dot = document.createElement('div');
     inner_dot.classList.add('dot__inner');
+    inner_dot.classList.add('shadow-outer');
     inner_dot.draggable = true;
     (0,_helpers_mount__WEBPACK_IMPORTED_MODULE_2__["default"])(inner_dot, dot);
     var content = document.createElement('div');
@@ -739,8 +796,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var dragEnterHandler = function dragEnterHandler(event, container) {
-  container.classList.add('todo-list__elem--drag-over');
+var dragEnterHandler = function dragEnterHandler(event, border) {
+  border.classList.add('todo-list__border--drag-over');
   return event.target;
 };
 
@@ -758,8 +815,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var dragLeaveHandler = function dragLeaveHandler(event, eventTarget, container) {
-  if (eventTarget === event.target) container.classList.remove('todo-list__elem--drag-over');
+var dragLeaveHandler = function dragLeaveHandler(event, eventTarget, border) {
+  if (eventTarget === event.target) border.classList.remove('todo-list__border--drag-over');
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dragLeaveHandler);
@@ -1016,15 +1073,25 @@ var light = {
   '--primary100': '#004B8E',
   '--primary200': '#ECF0F3',
   '--primary300': '#000000',
-  '--shadow100': 'rgba(255, 255, 255, 0.6)',
-  '--shadow200': 'rgba(0, 0, 0, .15)'
+  '--shadow100': 'rgba(212, 216, 219, 0.2)',
+  '--shadow200': 'rgba(255, 255, 255, 0.9)',
+  '--shadow300': 'rgba(212, 216, 219, 0.9)',
+  '--shadow400': 'rgba(255, 255, 255, 0.3)',
+  '--shadow500': 'rgba(212, 216, 219, 0.5)',
+  '--dot-gradient100': '#E0E4E7',
+  '--dot-gradient200': '#F8FCFF'
 };
 var dark = {
   '--primary100': '#FFA685',
   '--primary200': '#292D32',
   '--primary300': '#FFFFFF',
-  '--shadow100': 'rgba(255, 166, 133, 0.04)',
-  '--shadow200': 'rgba(0, 0, 0, .3)'
+  '--shadow100': 'rgba(0, 0, 0, 0.05)',
+  '--shadow200': 'rgba(255, 166, 133, 0.06)',
+  '--shadow300': 'rgba(0, 0, 0, 0.2)',
+  '--shadow400': 'rgba(255, 166, 133, 0.05)',
+  '--shadow500': 'rgba(0, 0, 0, 0.1)',
+  '--dot-gradient100': '#272B30',
+  '--dot-gradient200': '#2B2F35'
 };
 
 /***/ }),
@@ -1048,7 +1115,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".form {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 2rem;\r\n}\r\n\r\n.form__title, .form__description, .form__submit-mobile {\r\n    padding: 1rem;\r\n    border-radius: 2rem;\r\n    outline: 0;\r\n    width: 15rem;\r\n    color: var(--primary300);\r\n}\r\n\r\n.form__submit {\r\n    border-radius: 50%;\r\n    height: 4rem;\r\n    width: 4rem;\r\n    font-size: 2.5rem;\r\n    color: var(--primary100);\r\n    cursor: pointer;\r\n}\r\n\r\n.form__submit-mobile {\r\n    display: none;\r\n    text-align: center;\r\n    font-size: 1.3rem;\r\n    color: var(--primary100);\r\n    font-weight: bolder;\r\n    flex-grow: 1;\r\n    box-sizing: content-box;\r\n}\r\n\r\n.form__title, .form__description, .form__submit, .form__submit-mobile {\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n    box-shadow: 12px 12px 24px var(--shadow200), -12px -12px 24px var(--shadow100);\r\n}\r\n\r\n@media screen and (max-width: 720px) {\r\n    .form {\r\n        order: 1;\r\n        flex-basis: 100%;\r\n        flex-direction: column;\r\n    }\r\n\r\n    .form__submit-mobile {\r\n        display: block;\r\n    }\r\n\r\n    .form__submit {\r\n        display: none;\r\n    }\r\n}", "",{"version":3,"sources":["webpack://./src/components/Form/Form.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,SAAS;AACb;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,UAAU;IACV,YAAY;IACZ,wBAAwB;AAC5B;;AAEA;IACI,kBAAkB;IAClB,YAAY;IACZ,WAAW;IACX,iBAAiB;IACjB,wBAAwB;IACxB,eAAe;AACnB;;AAEA;IACI,aAAa;IACb,kBAAkB;IAClB,iBAAiB;IACjB,wBAAwB;IACxB,mBAAmB;IACnB,YAAY;IACZ,uBAAuB;AAC3B;;AAEA;IACI,UAAU;IACV,mCAAmC;IACnC,SAAS;IACT,8EAA8E;AAClF;;AAEA;IACI;QACI,QAAQ;QACR,gBAAgB;QAChB,sBAAsB;IAC1B;;IAEA;QACI,cAAc;IAClB;;IAEA;QACI,aAAa;IACjB;AACJ","sourcesContent":[".form {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 2rem;\r\n}\r\n\r\n.form__title, .form__description, .form__submit-mobile {\r\n    padding: 1rem;\r\n    border-radius: 2rem;\r\n    outline: 0;\r\n    width: 15rem;\r\n    color: var(--primary300);\r\n}\r\n\r\n.form__submit {\r\n    border-radius: 50%;\r\n    height: 4rem;\r\n    width: 4rem;\r\n    font-size: 2.5rem;\r\n    color: var(--primary100);\r\n    cursor: pointer;\r\n}\r\n\r\n.form__submit-mobile {\r\n    display: none;\r\n    text-align: center;\r\n    font-size: 1.3rem;\r\n    color: var(--primary100);\r\n    font-weight: bolder;\r\n    flex-grow: 1;\r\n    box-sizing: content-box;\r\n}\r\n\r\n.form__title, .form__description, .form__submit, .form__submit-mobile {\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n    box-shadow: 12px 12px 24px var(--shadow200), -12px -12px 24px var(--shadow100);\r\n}\r\n\r\n@media screen and (max-width: 720px) {\r\n    .form {\r\n        order: 1;\r\n        flex-basis: 100%;\r\n        flex-direction: column;\r\n    }\r\n\r\n    .form__submit-mobile {\r\n        display: block;\r\n    }\r\n\r\n    .form__submit {\r\n        display: none;\r\n    }\r\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".form {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 2rem;\r\n}\r\n\r\n.form__title, .form__description, .form__submit-mobile {\r\n    padding: 1rem;\r\n    border-radius: 2rem;\r\n    outline: 0;\r\n    width: 15rem;\r\n    color: var(--primary300);\r\n    text-align: center;\r\n}\r\n\r\n.form__submit {\r\n    border-radius: 50%;\r\n    height: 4rem;\r\n    width: 4rem;\r\n    font-size: 2.5rem;\r\n    color: var(--primary100);\r\n    cursor: pointer;\r\n    user-select: none;\r\n}\r\n\r\n.form__submit-mobile {\r\n    display: none;\r\n    text-align: center;\r\n    font-size: 1.3rem;\r\n    color: var(--primary100);\r\n    font-weight: bolder;\r\n    flex-grow: 1;\r\n    box-sizing: content-box;\r\n    cursor: pointer;\r\n}\r\n\r\n.form__submit:active, .form__submit-mobile:active {\r\n    box-shadow: 1px 1px 2px var(--shadow400), -1px -1px 2px var(--shadow500), inset -5px 5px 10px var(--shadow100), inset 5px -5px 10px var(--shadow100), inset -5px -5px 10px var(--shadow200), inset 5px 5px 13px var(--shadow300);\r\n}\r\n\r\n.form__title, .form__description, .form__submit, .form__submit-mobile {\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n}\r\n\r\n\r\n@media screen and (max-width: 720px) {\r\n    .form {\r\n        order: 1;\r\n        flex-basis: 100%;\r\n        flex-direction: column;\r\n    }\r\n\r\n    .form__submit-mobile {\r\n        display: block;\r\n    }\r\n\r\n    .form__submit {\r\n        display: none;\r\n    }\r\n}", "",{"version":3,"sources":["webpack://./src/components/Form/Form.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,SAAS;AACb;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,UAAU;IACV,YAAY;IACZ,wBAAwB;IACxB,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,YAAY;IACZ,WAAW;IACX,iBAAiB;IACjB,wBAAwB;IACxB,eAAe;IACf,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,kBAAkB;IAClB,iBAAiB;IACjB,wBAAwB;IACxB,mBAAmB;IACnB,YAAY;IACZ,uBAAuB;IACvB,eAAe;AACnB;;AAEA;IACI,gOAAgO;AACpO;;AAEA;IACI,UAAU;IACV,mCAAmC;IACnC,SAAS;AACb;;;AAGA;IACI;QACI,QAAQ;QACR,gBAAgB;QAChB,sBAAsB;IAC1B;;IAEA;QACI,cAAc;IAClB;;IAEA;QACI,aAAa;IACjB;AACJ","sourcesContent":[".form {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 2rem;\r\n}\r\n\r\n.form__title, .form__description, .form__submit-mobile {\r\n    padding: 1rem;\r\n    border-radius: 2rem;\r\n    outline: 0;\r\n    width: 15rem;\r\n    color: var(--primary300);\r\n    text-align: center;\r\n}\r\n\r\n.form__submit {\r\n    border-radius: 50%;\r\n    height: 4rem;\r\n    width: 4rem;\r\n    font-size: 2.5rem;\r\n    color: var(--primary100);\r\n    cursor: pointer;\r\n    user-select: none;\r\n}\r\n\r\n.form__submit-mobile {\r\n    display: none;\r\n    text-align: center;\r\n    font-size: 1.3rem;\r\n    color: var(--primary100);\r\n    font-weight: bolder;\r\n    flex-grow: 1;\r\n    box-sizing: content-box;\r\n    cursor: pointer;\r\n}\r\n\r\n.form__submit:active, .form__submit-mobile:active {\r\n    box-shadow: 1px 1px 2px var(--shadow400), -1px -1px 2px var(--shadow500), inset -5px 5px 10px var(--shadow100), inset 5px -5px 10px var(--shadow100), inset -5px -5px 10px var(--shadow200), inset 5px 5px 13px var(--shadow300);\r\n}\r\n\r\n.form__title, .form__description, .form__submit, .form__submit-mobile {\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n}\r\n\r\n\r\n@media screen and (max-width: 720px) {\r\n    .form {\r\n        order: 1;\r\n        flex-basis: 100%;\r\n        flex-direction: column;\r\n    }\r\n\r\n    .form__submit-mobile {\r\n        display: block;\r\n    }\r\n\r\n    .form__submit {\r\n        display: none;\r\n    }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1074,7 +1141,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".header {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    margin: 1rem 2rem;\r\n}\r\n\r\n@media screen and (max-width: 720px) {\r\n    .header {\r\n        flex-flow: row wrap;\r\n        gap: 1rem;\r\n    }\r\n}", "",{"version":3,"sources":["webpack://./src/components/Header/Header.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,8BAA8B;IAC9B,mBAAmB;IACnB,iBAAiB;AACrB;;AAEA;IACI;QACI,mBAAmB;QACnB,SAAS;IACb;AACJ","sourcesContent":[".header {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    margin: 1rem 2rem;\r\n}\r\n\r\n@media screen and (max-width: 720px) {\r\n    .header {\r\n        flex-flow: row wrap;\r\n        gap: 1rem;\r\n    }\r\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".header {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    margin: 1rem 2rem;\r\n}\r\n\r\n.header__logo {\r\n    user-select: none;\r\n}\r\n\r\n@media screen and (max-width: 720px) {\r\n    .header {\r\n        flex-flow: row wrap;\r\n        gap: 1rem;\r\n    }\r\n}", "",{"version":3,"sources":["webpack://./src/components/Header/Header.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,8BAA8B;IAC9B,mBAAmB;IACnB,iBAAiB;AACrB;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI;QACI,mBAAmB;QACnB,SAAS;IACb;AACJ","sourcesContent":[".header {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    margin: 1rem 2rem;\r\n}\r\n\r\n.header__logo {\r\n    user-select: none;\r\n}\r\n\r\n@media screen and (max-width: 720px) {\r\n    .header {\r\n        flex-flow: row wrap;\r\n        gap: 1rem;\r\n    }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1100,7 +1167,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".switch__button {\r\n    border-radius: 50%;\r\n    height: 4rem;\r\n    width: 4rem;\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n    box-shadow: 12px 12px 24px var(--shadow200), -12px -12px 24px var(--shadow100);\r\n    font-size: 2rem;\r\n    color: var(--primary100);\r\n    cursor: pointer;\r\n}", "",{"version":3,"sources":["webpack://./src/components/Switch/Switch.css"],"names":[],"mappings":"AAAA;IACI,kBAAkB;IAClB,YAAY;IACZ,WAAW;IACX,UAAU;IACV,mCAAmC;IACnC,SAAS;IACT,8EAA8E;IAC9E,eAAe;IACf,wBAAwB;IACxB,eAAe;AACnB","sourcesContent":[".switch__button {\r\n    border-radius: 50%;\r\n    height: 4rem;\r\n    width: 4rem;\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n    box-shadow: 12px 12px 24px var(--shadow200), -12px -12px 24px var(--shadow100);\r\n    font-size: 2rem;\r\n    color: var(--primary100);\r\n    cursor: pointer;\r\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".switch__button {\r\n    border-radius: 50%;\r\n    height: 4rem;\r\n    width: 4rem;\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n    font-size: 2rem;\r\n    color: var(--primary100);\r\n    cursor: pointer;\r\n    user-select: none;\r\n}\r\n\r\n.switch__button:active {\r\n    box-shadow: 1px 1px 2px var(--shadow400), -1px -1px 2px var(--shadow500), inset -5px 5px 10px var(--shadow100), inset 5px -5px 10px var(--shadow100), inset -5px -5px 10px var(--shadow200), inset 5px 5px 13px var(--shadow300);\r\n}", "",{"version":3,"sources":["webpack://./src/components/Switch/Switch.css"],"names":[],"mappings":"AAAA;IACI,kBAAkB;IAClB,YAAY;IACZ,WAAW;IACX,UAAU;IACV,mCAAmC;IACnC,SAAS;IACT,eAAe;IACf,wBAAwB;IACxB,eAAe;IACf,iBAAiB;AACrB;;AAEA;IACI,gOAAgO;AACpO","sourcesContent":[".switch__button {\r\n    border-radius: 50%;\r\n    height: 4rem;\r\n    width: 4rem;\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n    font-size: 2rem;\r\n    color: var(--primary100);\r\n    cursor: pointer;\r\n    user-select: none;\r\n}\r\n\r\n.switch__button:active {\r\n    box-shadow: 1px 1px 2px var(--shadow400), -1px -1px 2px var(--shadow500), inset -5px 5px 10px var(--shadow100), inset 5px -5px 10px var(--shadow100), inset -5px -5px 10px var(--shadow200), inset 5px 5px 13px var(--shadow300);\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1126,7 +1193,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".todo-list__pending, .todo-list__done {\r\n    transition: border-color .5s ease-out;\r\n}\r\n\r\n.todo-list__done.todo-list__elem--drag-over, .todo-list__pending.todo-list__elem--drag-over {\r\n    border: 2px dashed var(--primary100);\r\n}\r\n\r\n.todo-list__label {\r\n    display: flex;\r\n    justify-content: center;\r\n}", "",{"version":3,"sources":["webpack://./src/components/TodoListContainer/TodoListContainer.css"],"names":[],"mappings":"AAAA;IACI,qCAAqC;AACzC;;AAEA;IACI,oCAAoC;AACxC;;AAEA;IACI,aAAa;IACb,uBAAuB;AAC3B","sourcesContent":[".todo-list__pending, .todo-list__done {\r\n    transition: border-color .5s ease-out;\r\n}\r\n\r\n.todo-list__done.todo-list__elem--drag-over, .todo-list__pending.todo-list__elem--drag-over {\r\n    border: 2px dashed var(--primary100);\r\n}\r\n\r\n.todo-list__label {\r\n    display: flex;\r\n    justify-content: center;\r\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".todo-list__label {\r\n    display: flex;\r\n    justify-content: center;\r\n    user-select: none;\r\n}\r\n\r\n.todo-list__border {\r\n    content: \"\";\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    box-sizing: border-box;\r\n    width: 100%;\r\n    height: 100%;\r\n    border-radius: 2rem;\r\n    border: 2px dashed transparent;\r\n    pointer-events: none;\r\n    z-index: 2;\r\n    transition: border-color .5s ease-out;\r\n}\r\n\r\n.todo-list__border.todo-list__border--drag-over {\r\n    border: 2px dashed var(--primary100);\r\n}", "",{"version":3,"sources":["webpack://./src/components/TodoListContainer/TodoListContainer.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,uBAAuB;IACvB,iBAAiB;AACrB;;AAEA;IACI,WAAW;IACX,kBAAkB;IAClB,MAAM;IACN,OAAO;IACP,sBAAsB;IACtB,WAAW;IACX,YAAY;IACZ,mBAAmB;IACnB,8BAA8B;IAC9B,oBAAoB;IACpB,UAAU;IACV,qCAAqC;AACzC;;AAEA;IACI,oCAAoC;AACxC","sourcesContent":[".todo-list__label {\r\n    display: flex;\r\n    justify-content: center;\r\n    user-select: none;\r\n}\r\n\r\n.todo-list__border {\r\n    content: \"\";\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    box-sizing: border-box;\r\n    width: 100%;\r\n    height: 100%;\r\n    border-radius: 2rem;\r\n    border: 2px dashed transparent;\r\n    pointer-events: none;\r\n    z-index: 2;\r\n    transition: border-color .5s ease-out;\r\n}\r\n\r\n.todo-list__border.todo-list__border--drag-over {\r\n    border: 2px dashed var(--primary100);\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1152,7 +1219,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".todo-list {\r\n    display: grid;\r\n    grid-template: 1fr/1fr 1fr;\r\n    gap: 2rem;\r\n    margin: 0 2rem 2rem 2rem;\r\n}\r\n\r\n.todo-list > * {\r\n    margin: 0;\r\n    overflow-y: scroll;\r\n    /* box-sizing: border-box; */\r\n    border: 2px dashed transparent;\r\n    box-shadow: 12px 12px 24px var(--shadow200), -12px -12px 24px var(--shadow100);\r\n    border-radius: 2rem;\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: 2rem;\r\n    padding: 1rem;\r\n}\r\n\r\n@media screen and (max-width: 1000px) {\r\n    .todo-list {\r\n        grid-template: auto auto/ 1fr;\r\n    }\r\n}", "",{"version":3,"sources":["webpack://./src/components/TodoList/TodoList.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,0BAA0B;IAC1B,SAAS;IACT,wBAAwB;AAC5B;;AAEA;IACI,SAAS;IACT,kBAAkB;IAClB,4BAA4B;IAC5B,8BAA8B;IAC9B,8EAA8E;IAC9E,mBAAmB;IACnB,aAAa;IACb,sBAAsB;IACtB,SAAS;IACT,aAAa;AACjB;;AAEA;IACI;QACI,6BAA6B;IACjC;AACJ","sourcesContent":[".todo-list {\r\n    display: grid;\r\n    grid-template: 1fr/1fr 1fr;\r\n    gap: 2rem;\r\n    margin: 0 2rem 2rem 2rem;\r\n}\r\n\r\n.todo-list > * {\r\n    margin: 0;\r\n    overflow-y: scroll;\r\n    /* box-sizing: border-box; */\r\n    border: 2px dashed transparent;\r\n    box-shadow: 12px 12px 24px var(--shadow200), -12px -12px 24px var(--shadow100);\r\n    border-radius: 2rem;\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: 2rem;\r\n    padding: 1rem;\r\n}\r\n\r\n@media screen and (max-width: 1000px) {\r\n    .todo-list {\r\n        grid-template: auto auto/ 1fr;\r\n    }\r\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".todo-list {\r\n    display: grid;\r\n    grid-template: 1fr/1fr 1fr;\r\n    gap: 2rem;\r\n    margin: 0 2rem 2rem 2rem;\r\n}\r\n\r\n.todo-list > * {\r\n    position: relative;\r\n    margin: 0;\r\n    overflow-y: scroll;\r\n    border-radius: 2rem;\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: 2rem;\r\n    padding: 1rem;\r\n}\r\n\r\n@media screen and (max-width: 1000px) {\r\n    .todo-list {\r\n        grid-template: auto auto/ 1fr;\r\n    }\r\n}", "",{"version":3,"sources":["webpack://./src/components/TodoList/TodoList.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,0BAA0B;IAC1B,SAAS;IACT,wBAAwB;AAC5B;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,kBAAkB;IAClB,mBAAmB;IACnB,aAAa;IACb,sBAAsB;IACtB,SAAS;IACT,aAAa;AACjB;;AAEA;IACI;QACI,6BAA6B;IACjC;AACJ","sourcesContent":[".todo-list {\r\n    display: grid;\r\n    grid-template: 1fr/1fr 1fr;\r\n    gap: 2rem;\r\n    margin: 0 2rem 2rem 2rem;\r\n}\r\n\r\n.todo-list > * {\r\n    position: relative;\r\n    margin: 0;\r\n    overflow-y: scroll;\r\n    border-radius: 2rem;\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: 2rem;\r\n    padding: 1rem;\r\n}\r\n\r\n@media screen and (max-width: 1000px) {\r\n    .todo-list {\r\n        grid-template: auto auto/ 1fr;\r\n    }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1178,7 +1245,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".todo > * {\r\n    margin: 0;\r\n}\r\n\r\n.todo {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 2rem;\r\n}\r\n\r\n.todo__title, .todo__description {\r\n    word-wrap: break-word;\r\n}\r\n\r\n.todo__dot {\r\n    min-height: 5rem;\r\n    min-width: 5rem;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    border-radius: 50%;\r\n    box-shadow: inset 6px 6px 12px var(--shadow200), inset -6px -6px 12px var(--shadow100);\r\n}\r\n\r\n.dot__inner {\r\n    min-height: 3rem;\r\n    min-width: 3rem;\r\n    border-radius: 50%;\r\n    box-shadow: 6px 6px 12px var(--shadow200), -6px -6px 12px var(--shadow100);\r\n    cursor: move;\r\n}\r\n\r\n.todo__content-wrapper {\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: .5rem;\r\n    max-width: 60%;\r\n}\r\n\r\n.todo__delete {\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n    color: var(--primary100);\r\n    font-style: italic;\r\n    word-break: normal;\r\n    cursor: pointer;\r\n}\r\n\r\n.todo__delete:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.todo__label-wrapper {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: .5rem;\r\n    word-break: break-word;\r\n}", "",{"version":3,"sources":["webpack://./src/components/Todo/Todo.css"],"names":[],"mappings":"AAAA;IACI,SAAS;AACb;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,SAAS;AACb;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,gBAAgB;IAChB,eAAe;IACf,aAAa;IACb,uBAAuB;IACvB,mBAAmB;IACnB,kBAAkB;IAClB,sFAAsF;AAC1F;;AAEA;IACI,gBAAgB;IAChB,eAAe;IACf,kBAAkB;IAClB,0EAA0E;IAC1E,YAAY;AAChB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,UAAU;IACV,cAAc;AAClB;;AAEA;IACI,UAAU;IACV,mCAAmC;IACnC,SAAS;IACT,wBAAwB;IACxB,kBAAkB;IAClB,kBAAkB;IAClB,eAAe;AACnB;;AAEA;IACI,0BAA0B;AAC9B;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,UAAU;IACV,sBAAsB;AAC1B","sourcesContent":[".todo > * {\r\n    margin: 0;\r\n}\r\n\r\n.todo {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 2rem;\r\n}\r\n\r\n.todo__title, .todo__description {\r\n    word-wrap: break-word;\r\n}\r\n\r\n.todo__dot {\r\n    min-height: 5rem;\r\n    min-width: 5rem;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    border-radius: 50%;\r\n    box-shadow: inset 6px 6px 12px var(--shadow200), inset -6px -6px 12px var(--shadow100);\r\n}\r\n\r\n.dot__inner {\r\n    min-height: 3rem;\r\n    min-width: 3rem;\r\n    border-radius: 50%;\r\n    box-shadow: 6px 6px 12px var(--shadow200), -6px -6px 12px var(--shadow100);\r\n    cursor: move;\r\n}\r\n\r\n.todo__content-wrapper {\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: .5rem;\r\n    max-width: 60%;\r\n}\r\n\r\n.todo__delete {\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n    color: var(--primary100);\r\n    font-style: italic;\r\n    word-break: normal;\r\n    cursor: pointer;\r\n}\r\n\r\n.todo__delete:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.todo__label-wrapper {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: .5rem;\r\n    word-break: break-word;\r\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".todo > * {\r\n    margin: 0;\r\n}\r\n\r\n.todo {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 2rem;\r\n}\r\n\r\n.todo__title, .todo__description {\r\n    word-wrap: break-word;\r\n}\r\n\r\n.todo__dot {\r\n    min-height: 5rem;\r\n    min-width: 5rem;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    border-radius: 50%;\r\n}\r\n\r\n.dot__inner {\r\n    min-height: 3rem;\r\n    min-width: 3rem;\r\n    border-radius: 50%;\r\n    background: linear-gradient(135deg, var(--dot-gradient100) 0%, var(--dot-gradient200) 100%);\r\n    cursor: move;\r\n}\r\n\r\n.todo__content-wrapper {\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: .5rem;\r\n    max-width: 60%;\r\n}\r\n\r\n.todo__delete {\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n    color: var(--primary100);\r\n    font-style: italic;\r\n    word-break: normal;\r\n    cursor: pointer;\r\n}\r\n\r\n.todo__delete:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.todo__label-wrapper {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: .5rem;\r\n    word-break: break-word;\r\n}", "",{"version":3,"sources":["webpack://./src/components/Todo/Todo.css"],"names":[],"mappings":"AAAA;IACI,SAAS;AACb;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,SAAS;AACb;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,gBAAgB;IAChB,eAAe;IACf,aAAa;IACb,uBAAuB;IACvB,mBAAmB;IACnB,kBAAkB;AACtB;;AAEA;IACI,gBAAgB;IAChB,eAAe;IACf,kBAAkB;IAClB,2FAA2F;IAC3F,YAAY;AAChB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,UAAU;IACV,cAAc;AAClB;;AAEA;IACI,UAAU;IACV,mCAAmC;IACnC,SAAS;IACT,wBAAwB;IACxB,kBAAkB;IAClB,kBAAkB;IAClB,eAAe;AACnB;;AAEA;IACI,0BAA0B;AAC9B;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,UAAU;IACV,sBAAsB;AAC1B","sourcesContent":[".todo > * {\r\n    margin: 0;\r\n}\r\n\r\n.todo {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 2rem;\r\n}\r\n\r\n.todo__title, .todo__description {\r\n    word-wrap: break-word;\r\n}\r\n\r\n.todo__dot {\r\n    min-height: 5rem;\r\n    min-width: 5rem;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    border-radius: 50%;\r\n}\r\n\r\n.dot__inner {\r\n    min-height: 3rem;\r\n    min-width: 3rem;\r\n    border-radius: 50%;\r\n    background: linear-gradient(135deg, var(--dot-gradient100) 0%, var(--dot-gradient200) 100%);\r\n    cursor: move;\r\n}\r\n\r\n.todo__content-wrapper {\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: .5rem;\r\n    max-width: 60%;\r\n}\r\n\r\n.todo__delete {\r\n    outline: 0;\r\n    background-color: var(--primary200);\r\n    border: 0;\r\n    color: var(--primary100);\r\n    font-style: italic;\r\n    word-break: normal;\r\n    cursor: pointer;\r\n}\r\n\r\n.todo__delete:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.todo__label-wrapper {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: .5rem;\r\n    word-break: break-word;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1204,7 +1271,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root {\r\n    --primary100: #004B8E;\r\n    --primary200: #ECF0F3;\r\n    --primary300: #000000;\r\n    --shadow100: rgba(255, 255, 255, 0.6);\r\n    --shadow200: rgba(0, 0, 0, .1);\r\n}\r\n\r\nhtml {\r\n    font-size: 14px;\r\n}\r\n\r\nbody {\r\n    margin: 0;\r\n}\r\n\r\n#root {\r\n    color: var(--primary100);\r\n    background-color: var(--primary200);\r\n    display: grid;\r\n    min-height: 100vh;\r\n    grid-template: auto 1fr/ 1fr;\r\n    gap: 1rem;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n    display: none;\r\n}\r\n  \r\n* {\r\n    -ms-overflow-style: none; \r\n    scrollbar-width: none;\r\n    font-family: 'Nunito Sans', sans-serif;\r\n    margin: 0;\r\n}\r\n\r\n\r\n@media screen and (max-width: 1000px) {\r\n    html {\r\n        font-size: 12px;\r\n    }\r\n}\r\n", "",{"version":3,"sources":["webpack://./src/styles/style.css"],"names":[],"mappings":"AAAA;IACI,qBAAqB;IACrB,qBAAqB;IACrB,qBAAqB;IACrB,qCAAqC;IACrC,8BAA8B;AAClC;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,SAAS;AACb;;AAEA;IACI,wBAAwB;IACxB,mCAAmC;IACnC,aAAa;IACb,iBAAiB;IACjB,4BAA4B;IAC5B,SAAS;AACb;;AAEA;IACI,aAAa;AACjB;;AAEA;IACI,wBAAwB;IACxB,qBAAqB;IACrB,sCAAsC;IACtC,SAAS;AACb;;;AAGA;IACI;QACI,eAAe;IACnB;AACJ","sourcesContent":[":root {\r\n    --primary100: #004B8E;\r\n    --primary200: #ECF0F3;\r\n    --primary300: #000000;\r\n    --shadow100: rgba(255, 255, 255, 0.6);\r\n    --shadow200: rgba(0, 0, 0, .1);\r\n}\r\n\r\nhtml {\r\n    font-size: 14px;\r\n}\r\n\r\nbody {\r\n    margin: 0;\r\n}\r\n\r\n#root {\r\n    color: var(--primary100);\r\n    background-color: var(--primary200);\r\n    display: grid;\r\n    min-height: 100vh;\r\n    grid-template: auto 1fr/ 1fr;\r\n    gap: 1rem;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n    display: none;\r\n}\r\n  \r\n* {\r\n    -ms-overflow-style: none; \r\n    scrollbar-width: none;\r\n    font-family: 'Nunito Sans', sans-serif;\r\n    margin: 0;\r\n}\r\n\r\n\r\n@media screen and (max-width: 1000px) {\r\n    html {\r\n        font-size: 12px;\r\n    }\r\n}\r\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\r\n    --primary100: #004B8E;\r\n    --primary200: #ECF0F3;\r\n    --primary300: #000000;\r\n    --shadow100: rgba(212, 216, 219, 0.2);\r\n    --shadow200: rgba(255, 255, 255, 0.9);\r\n    --shadow300: rgba(212, 216, 219, 0.9);\r\n    --shadow400: rgba(255, 255, 255, 0.3);\r\n    --shadow500: rgba(212, 216, 219, 0.5);\r\n    --dot-gradient100: #E0E4E7;\r\n    --dot-gradient200: #F8FCFF;\r\n}\r\n\r\nhtml {\r\n    font-size: 14px;\r\n}\r\n\r\nbody {\r\n    margin: 0;\r\n}\r\n\r\n#root {\r\n    color: var(--primary100);\r\n    background-color: var(--primary200);\r\n    display: grid;\r\n    min-height: 100vh;\r\n    grid-template: auto 1fr/ 1fr;\r\n    gap: 1rem;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n    display: none;\r\n}\r\n  \r\n* {\r\n    -ms-overflow-style: none; \r\n    scrollbar-width: none;\r\n    font-family: 'Nunito Sans', sans-serif;\r\n    margin: 0;\r\n}\r\n\r\n\r\n@media screen and (max-width: 1000px) {\r\n    html {\r\n        font-size: 12px;\r\n    }\r\n}\r\n\r\n.shadow-outer {\r\n    box-shadow: -5px 5px 10px var(--shadow100), 5px -5px 10px var(--shadow100), -5px -5px 10px var(--shadow200), 5px 5px 13px var(--shadow300), inset 1px 1px 2px var(--shadow400), inset -1px -1px 2px var(--shadow500);\r\n}\r\n\r\n.shadow-inner {\r\n    box-shadow: 1px 1px 2px var(--shadow400), -1px -1px 2px var(--shadow500), inset -5px 5px 10px var(--shadow100), inset 5px -5px 10px var(--shadow100), inset -5px -5px 10px var(--shadow200), inset 5px 5px 13px var(--shadow300);\r\n}\r\n", "",{"version":3,"sources":["webpack://./src/styles/style.css"],"names":[],"mappings":"AAAA;IACI,qBAAqB;IACrB,qBAAqB;IACrB,qBAAqB;IACrB,qCAAqC;IACrC,qCAAqC;IACrC,qCAAqC;IACrC,qCAAqC;IACrC,qCAAqC;IACrC,0BAA0B;IAC1B,0BAA0B;AAC9B;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,SAAS;AACb;;AAEA;IACI,wBAAwB;IACxB,mCAAmC;IACnC,aAAa;IACb,iBAAiB;IACjB,4BAA4B;IAC5B,SAAS;AACb;;AAEA;IACI,aAAa;AACjB;;AAEA;IACI,wBAAwB;IACxB,qBAAqB;IACrB,sCAAsC;IACtC,SAAS;AACb;;;AAGA;IACI;QACI,eAAe;IACnB;AACJ;;AAEA;IACI,oNAAoN;AACxN;;AAEA;IACI,gOAAgO;AACpO","sourcesContent":[":root {\r\n    --primary100: #004B8E;\r\n    --primary200: #ECF0F3;\r\n    --primary300: #000000;\r\n    --shadow100: rgba(212, 216, 219, 0.2);\r\n    --shadow200: rgba(255, 255, 255, 0.9);\r\n    --shadow300: rgba(212, 216, 219, 0.9);\r\n    --shadow400: rgba(255, 255, 255, 0.3);\r\n    --shadow500: rgba(212, 216, 219, 0.5);\r\n    --dot-gradient100: #E0E4E7;\r\n    --dot-gradient200: #F8FCFF;\r\n}\r\n\r\nhtml {\r\n    font-size: 14px;\r\n}\r\n\r\nbody {\r\n    margin: 0;\r\n}\r\n\r\n#root {\r\n    color: var(--primary100);\r\n    background-color: var(--primary200);\r\n    display: grid;\r\n    min-height: 100vh;\r\n    grid-template: auto 1fr/ 1fr;\r\n    gap: 1rem;\r\n}\r\n\r\n*::-webkit-scrollbar {\r\n    display: none;\r\n}\r\n  \r\n* {\r\n    -ms-overflow-style: none; \r\n    scrollbar-width: none;\r\n    font-family: 'Nunito Sans', sans-serif;\r\n    margin: 0;\r\n}\r\n\r\n\r\n@media screen and (max-width: 1000px) {\r\n    html {\r\n        font-size: 12px;\r\n    }\r\n}\r\n\r\n.shadow-outer {\r\n    box-shadow: -5px 5px 10px var(--shadow100), 5px -5px 10px var(--shadow100), -5px -5px 10px var(--shadow200), 5px 5px 13px var(--shadow300), inset 1px 1px 2px var(--shadow400), inset -1px -1px 2px var(--shadow500);\r\n}\r\n\r\n.shadow-inner {\r\n    box-shadow: 1px 1px 2px var(--shadow400), -1px -1px 2px var(--shadow500), inset -5px 5px 10px var(--shadow100), inset 5px -5px 10px var(--shadow100), inset -5px -5px 10px var(--shadow200), inset 5px 5px 13px var(--shadow300);\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2142,4 +2209,4 @@ store.subscribe(function () {
 
 /******/ })()
 ;
-//# sourceMappingURL=bundle.9b7529845a57e457eafd.js.map
+//# sourceMappingURL=bundle.4b47a91b9d30170c8bcf.js.map
