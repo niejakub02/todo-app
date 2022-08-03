@@ -10,6 +10,7 @@ const rootReducer = combineReducers({todos, themes})
 const store = createStore(rootReducer, {...initialState});
 
 store.subscribe(() => {
+    console.log(store.getState())
     applyTheme(store);
     render(store);
 });

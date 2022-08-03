@@ -1,12 +1,24 @@
-.todo-list__pending, .todo-list__done {
-    transition: border-color .5s ease-out;
-}
-
-.todo-list__done.todo-list__elem--drag-over, .todo-list__pending.todo-list__elem--drag-over {
-    border: 2px dashed var(--primary100);
-}
-
 .todo-list__label {
     display: flex;
     justify-content: center;
+    user-select: none;
+}
+
+.todo-list__border {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    border: 2px dashed transparent;
+    pointer-events: none;
+    z-index: 2;
+    transition: border-color .5s ease-out;
+}
+
+.todo-list__border.todo-list__border--drag-over {
+    border: 2px dashed var(--primary100);
 }

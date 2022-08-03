@@ -8,11 +8,16 @@ import dropHandler from '../../handlers/dropHandler';
 
 const TodoListContainer = (classname, label_content, setCB, copyCB, done) => {
     let enterTarget = null;
-    let container;
+    let container, border;
 
     const build = () => {
         container = document.createElement('div');
         container.classList.add(classname);
+        container.classList.add('shadow-outer');
+
+        border = document.createElement('div');
+        border.classList.add('todo-list__border');
+        mount(border, container)
 
         let label = document.createElement('h1');
         label.classList.add('todo-list__label');
@@ -22,8 +27,8 @@ const TodoListContainer = (classname, label_content, setCB, copyCB, done) => {
     
     const render = () => {
         build();
-        addEvent(container, 'dragenter', () => enterTarget = dragEnterHandler(event, container));
-        addEvent(container, 'dragleave', () => dragLeaveHandler(event, enterTarget, container));
+        addEvent(container, 'dragenter', () => enterTarget = dragEnterHandler(event, border));
+        addEvent(container, 'dragleave', () => dragLeaveHandler(event, enterTarget, border));
         addEvent(container, 'dragover', () => dragOverHandler(event));
         addEvent(container, 'drop', () => dropHandler(event, done, copyCB, setCB));
         return container;

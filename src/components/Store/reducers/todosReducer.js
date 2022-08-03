@@ -1,56 +1,27 @@
-import initialState from "../initialState";
-
-let id = 0;
+import todo from "./todoReducer";
 
 const todos = (state = [], action) => {
     switch (action.type) {
         case 'ADD_TODO':
             return [
-                ...state,
-                {
-                    id: id++,
-                    title: action.title,
-                    description: action.description,
-                    done: false
-                }
+                    ...state,
+                    todo({}, action)
             ]
 
         case 'TOGGLE_TODO':
-            return state.map(todo => {
-                if (todo.id !== action.id) return todo;
-                
-                return {
-                    ...todo,
-                    done: !todo.done
-                }
-            })
+            return state.map(t => todo(t, action));
 
         case 'DELETE_TODO':
-            return state.filter(todo => {
-                if (todo.id !== action.id) return todo;
-            })
+            return state.filter(t => (t.id !== action.id));
 
         case 'SET_TODO_STATE':
-            return state.map(todo => {
-                if (todo.id !== action.id) return todo;
-                
-                return {
-                    ...todo,
-                    done: action.done
-                }
-            })
+            return state.map(t => todo(t, action));
 
         case 'COPY_TODO':
             return [
-                ...state,
-                {
-                    ...state.find(todo => 
-                        (todo.id === action.id) 
-                    ),
-                    id: id++,
-                    done: action.done
-                }
-            ]
+                    ...state,
+                    todo(state, action)
+                ]
 
         default:
             return state;
