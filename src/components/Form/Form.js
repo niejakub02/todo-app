@@ -8,18 +8,18 @@ class Form extends Base {
     }
 
     build() {
-        this.title_input = this.createElement('input', 'form__title');
+        this.title_input = this.createElement('input', 'form__title shadow-outer');
         this.title_input.placeholder = 'title';
         this.mount(this.title_input, this.form);
 
-        this.description_input = this.createElement('input', 'form__description');
+        this.description_input = this.createElement('input', 'form__description shadow-outer');
         this.description_input.placeholder = 'description';
         this.mount(this.description_input, this.form);
         
-        this.button = this.createElement('button', 'form__submit material-symbols-outlined', 'add');
+        this.button = this.createElement('button', 'form__submit material-symbols-outlined shadow-outer', 'add');
         this.mount(this.button, this.form);
 
-        this.button_mobile = this.createElement('button', 'form__submit-mobile', 'Add node');
+        this.button_mobile = this.createElement('button', 'form__submit-mobile shadow-outer', 'Add node');
         this.mount(this.button_mobile, this.form);
     }
 

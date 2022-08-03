@@ -8,7 +8,7 @@ class Switch extends Base {
     }
     
     build() {
-        this.button = this.createElement('button', 'switch__button material-symbols-outlined', 'light_mode');
+        this.button = this.createElement('button', 'switch__button material-symbols-outlined shadow-outer', 'light_mode');
         this.mount(this.button);
     }
     
