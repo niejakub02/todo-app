@@ -1,26 +1,41 @@
 import './Switch.css';
-import addEvent from "../../helpers/addEvent";
-import mount from "../../helpers/mount";
-import switchHandler from '../../handlers/switchHandler';
+import { mount, createElement } from 'helpers';
+import { switchHandler } from 'handlers';
+import { store } from 'store';
 
-const Switch = (toggleThemeCB) => {
-    let container, button;
+const Switch = () => {
+    let container, button, currentTheme = false;
+
+    const themeIconSwap = () => {
+        const { themes } = store.getState();
+        if (currentTheme !== themes) {
+            button.innerHTML = (themes) ? 'dark_mode' : 'light_mode';
+            currentTheme = themes;
+        }
+    }
 
     const build = () => {
-        container = document.createElement('div');
-        container.classList.add('switch');
+        container = createElement({
+            tag: 'div',
+            classList: 'switch'
+        })
 
-        button = document.createElement('button');
-        button.classList.add('switch__button');
-        button.classList.add('material-symbols-outlined');
-        button.classList.add('shadow-outer');
-        button.innerHTML = 'light_mode';
+        button = createElement({
+            tag: 'button',
+            classList: 'switch__button material-symbols-outlined shadow-outer',
+            innerHTML: 'light_mode'
+        })
         mount(button, container);
     }
 
     const render = () => {
         build();
-        addEvent(button, 'click', () => switchHandler(toggleThemeCB, button))
+
+        store.subscribe(themeIconSwap);
+
+        button.addEventListener('click', (e) => {
+            switchHandler(e);
+        })
         return container;
     }
 

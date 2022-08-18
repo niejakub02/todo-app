@@ -1,45 +1,61 @@
 import './Form.css';
-import addEvent from "../../helpers/addEvent";
-import mount from "../../helpers/mount";
-import submitHandler from '../../handlers/submitHandler';
+import { submitHandler } from 'handlers';
+import { mount, createElement } from 'helpers';
 
-const Form = (submitCB) => {
+const Form = () => {
     let form, button, button_mobile, title_input, description_input;
 
-    const build = () => {
-        form = document.createElement('form');
-        form.classList.add('form');
+    const resetInputs = () => {
+        title_input.value = "";
+        description_input.value = ""; 
+    }
 
-        title_input = document.createElement('input');
-        title_input.classList.add('form__title');
-        title_input.classList.add('shadow-outer');
-        title_input.placeholder = 'title';
+    const build = () => {
+        form = createElement({
+            tag: 'form',
+            classList: 'form'
+        });
+
+        title_input = createElement({
+            tag: 'input',
+            classList: 'form__title shadow-inner',
+            placeholder: 'title'
+        });
         mount(title_input, form);
 
-        description_input = document.createElement('input');
-        description_input.classList.add('form__description');
-        description_input.classList.add('shadow-outer');
-        description_input.placeholder = 'description';
+        description_input = createElement({
+            tag: 'input',
+            classList: 'form__description shadow-inner',
+            placeholder: 'description'
+        })
         mount(description_input, form);
-        
-        button = document.createElement('button');
-        button.classList.add('form__submit');
-        button.classList.add('material-symbols-outlined');
-        button.classList.add('shadow-outer');
-        button.innerHTML = 'add';
+
+        button = createElement({
+            tag: 'button',
+            classList: 'form__submit material-symbols-outlined shadow-outer',
+            innerHTML: 'add'
+        })
         mount(button, form);
 
-        button_mobile = document.createElement('button');
-        button_mobile.classList.add('form__submit-mobile');
-        button_mobile.classList.add('shadow-outer');
-        button_mobile.innerHTML = 'Add node';
+        button_mobile = createElement({
+            tag: 'button',
+            classList: 'form__submit-mobile shadow-outer',
+            innerHTML: 'Add node'
+        })
         mount(button_mobile, form);
     }   
     
     const render = () => {
         build();
-        addEvent(button, 'click', () => submitHandler(event, title_input.value, description_input.value, submitCB));
-        addEvent(form, 'submit', () => submitHandler(event, title_input.value, description_input.value, submitCB));
+
+        button.addEventListener('click', (e) => {
+            submitHandler(e, title_input.value, description_input.value);
+            resetInputs();
+        })
+        form.addEventListener('submit', (e) => {
+            submitHandler(e, title_input.value, description_input.value);
+            resetInputs();
+        })
         return form;
     }
     

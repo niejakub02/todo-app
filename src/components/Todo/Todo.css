@@ -26,7 +26,7 @@
     min-width: 3rem;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--dot-gradient100) 0%, var(--dot-gradient200) 100%);
-    cursor: move;
+    cursor: grab;
 }
 
 .todo__content-wrapper {
@@ -41,14 +41,15 @@
     background-color: var(--primary200);
     border: 0;
     color: var(--primary100);
-    font-style: italic;
-    word-break: normal;
+    font-size: 2.5rem;
+    margin-left: auto;
+    margin-right: 1rem;
     cursor: pointer;
 }
 
-.todo__delete:hover {
-    text-decoration: underline;
-}
+/* .todo__delete:hover {
+    
+} */
 
 .todo__label-wrapper {
     display: flex;

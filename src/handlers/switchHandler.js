@@ -1,6 +1,9 @@
-const switchHandler = (toggleThemeCB, button) => {
-    toggleThemeCB();
-    button.innerHTML = (button.innerHTML === 'light_mode') ? 'dark_mode' : 'light_mode';
+import store from "../store/store";
+import themeActions from "../store/actions/themeActions";
+
+const switchHandler = (e) => {
+    const { themes } = store.getState();
+    store.dispatch(themeActions.toggleTheme(themes))
 }
 
 export default switchHandler;

@@ -1,23 +1,27 @@
 import './TodoList.css';
-import TodoListContainer from "../TodoListContainer/TodoListContainer";
-import Todo from "../Todo/Todo";
-import mount from "../../helpers/mount";
+import { TodoListContainer } from 'components';
+import { mount, createElement } from 'helpers';
 
-const TodoList = (todos, setCB, copyCB, deleteCB) => {
-    let container, pendingContainer, doneContainer;
+const TodoList = () => {
+    let container;
 
     const build = () => {
-        container = document.createElement('div');
-        container.classList.add('todo-list');
+        container = createElement({
+            tag: 'div',
+            classList: 'todo-list'
+        });
 
-        pendingContainer = TodoListContainer('todo-list__pending', 'Pending', setCB, copyCB, false)(container);
+        TodoListContainer({
+            className: 'todo-list__pending',
+            labelContent: 'Pending',
+            isDone: false
+        })(container);
 
-        doneContainer = TodoListContainer('todo-list__done', 'Done', setCB, copyCB, true)(container);
-
-        for (let todo of todos) {
-            console.log(todos);
-            Todo(todo, deleteCB)((todo.done) ? doneContainer : pendingContainer);
-        }
+        TodoListContainer({
+            className: 'todo-list__done',
+            labelContent: 'Done',
+            isDone: true
+        })(container);        
     }
 
     const render = () => {

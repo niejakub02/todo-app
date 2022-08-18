@@ -1,4 +1,17 @@
-:root {
+.dark-theme {
+    --primary200: #292D32;
+    --primary100: #FFA685;
+    --primary300: #FFFFFF;
+    --shadow100: rgba(0, 0, 0, 0.05);
+    --shadow200: rgba(255, 166, 133, 0.06);
+    --shadow300: rgba(0, 0, 0, 0.2);
+    --shadow400: rgba(255, 166, 133, 0.05);
+    --shadow500: rgba(0, 0, 0, 0.1);
+    --dot-gradient100: #272B30;
+    --dot-gradient200: #2B2F35;
+}
+
+.light-theme {
     --primary100: #004B8E;
     --primary200: #ECF0F3;
     --primary300: #000000;

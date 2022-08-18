@@ -1,23 +1,25 @@
 import './Header.css';
-import mount from "../../helpers/mount";
-import Form from '../Form/Form';
-import Switch from '../Switch/Switch';
+import { mount, createElement } from 'helpers';
+import { Form, Switch } from 'components';
 
-const Header = (addCB, toggleThemeCB) => {
+const Header = () => {
     let container;
 
     const build = () => {
-        container = document.createElement('header');
-        container.classList.add('header');
+        container = createElement({
+            tag: 'header',
+            classList: 'header'
+        });
 
-        let logo = document.createElement('h1');
-        logo.classList.add('header__logo');
-        logo.innerHTML = 'TodoApp';
+        let logo = createElement({
+            tag: 'h1',
+            classList: 'header__logo',
+            innerHTML: 'TodoApp'
+        });
         mount(logo, container);
 
-        Form(addCB)(container)
-    
-        Switch(toggleThemeCB)(container)
+        Form()(container)
+        Switch()(container)
     }
 
     const render = () => {

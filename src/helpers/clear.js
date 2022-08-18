@@ -1,5 +1,5 @@
-const clear = () => {
-    document.querySelector('#root').innerHTML = "";
+const clear = (element = document.querySelector('#root')) => {
+    element.innerHTML = "";
 }
 
 export default clear;

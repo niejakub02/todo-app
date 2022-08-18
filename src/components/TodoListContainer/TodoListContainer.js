@@ -1,38 +1,68 @@
 import './TodoListContainer.css';
-import addEvent from "../../helpers/addEvent";
-import mount from "../../helpers/mount";
-import dragEnterHandler from '../../handlers/dragEnterHandler';
-import dragLeaveHandler from '../../handlers/dragLeaveHandler';
-import dragOverHandler from '../../handlers/dragOverHandler';
-import dropHandler from '../../handlers/dropHandler';
+import { dragEnterHandler, dragLeaveHandler, dragOverHandler, dropHandler } from 'handlers';
+import { mount, clear, createElement } from 'helpers';
+import { Todo } from 'components';
+import { store } from 'store';
 
-const TodoListContainer = (classname, label_content, setCB, copyCB, done) => {
+const TodoListContainer = ({ className, labelContent, isDone }) => {
     let enterTarget = null;
-    let container, border;
+    let container, border, todosWrapper;
+
+    const renderTodos = () => {
+        clear(todosWrapper);
+        const { todos } = store.getState();
+        todos.forEach(todo => {
+            if (todo.done === isDone) Todo(todo)(todosWrapper);
+        })
+    }
 
     const build = () => {
-        container = document.createElement('div');
-        container.classList.add(classname);
-        container.classList.add('shadow-outer');
+        container = createElement({
+            tag: 'div',
+            classList: `${className} shadow-outer`
+        });
 
-        border = document.createElement('div');
-        border.classList.add('todo-list__border');
+        border = createElement({
+            tag: 'div',
+            classList: 'todo-list__border'
+        });
         mount(border, container)
 
-        let label = document.createElement('h1');
-        label.classList.add('todo-list__label');
-        label.innerHTML = label_content;
+        let label = createElement({
+            tag: 'h1',
+            classList: 'todo-list__label',
+            innerHTML: labelContent
+        });
         mount(label, container);
+
+        todosWrapper = createElement({
+            tag: 'div',
+            classList: 'todo-list__todos'
+        })
+        mount(todosWrapper, container);
     }
-    
+
     const render = () => {
         build();
-        addEvent(container, 'dragenter', () => enterTarget = dragEnterHandler(event, border));
-        addEvent(container, 'dragleave', () => dragLeaveHandler(event, enterTarget, border));
-        addEvent(container, 'dragover', () => dragOverHandler(event));
-        addEvent(container, 'drop', () => dropHandler(event, done, copyCB, setCB));
+
+        store.subscribe(renderTodos);
+
+        container.addEventListener('dragenter', (e) => {
+            enterTarget = dragEnterHandler(e, border);
+        });
+        container.addEventListener('dragleave', (e) => {
+            dragLeaveHandler(e, enterTarget, border);
+        });
+        container.addEventListener('dragover', (e) => {
+            dragOverHandler(e);
+        })
+        container.addEventListener('drop', (e) => {
+            dropHandler(e, isDone, border)
+        });
         return container;
     }
+
+    
 
     return (parent) => mount(render(), parent);
 }

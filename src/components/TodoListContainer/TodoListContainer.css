@@ -22,3 +22,14 @@
 .todo-list__border.todo-list__border--drag-over {
     border: 2px dashed var(--primary100);
 }
+
+.todo-list__todos {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 50vh;
+}
+
+.todo-list__done .todo-list__todos .todo__content-wrapper {
+    text-decoration: line-through;
+}
